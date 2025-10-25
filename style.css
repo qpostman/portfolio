@@ -1,0 +1,243 @@
+/* ====== GLOBAL ====== */
+* {
+    box-sizing: border-box;
+  }
+  
+  body {
+    margin: 0;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: #f4f4f4;
+    background: #444444 url('https://www.transparenttextures.com/patterns/dark-mosaic.png');
+    background-attachment: fixed;
+    background-size: 400px;
+    line-height: 1.6;
+  }
+  
+  h1, h2 {
+    color: #e9e9e9;
+  }
+  
+  a {
+    color: #58a6ff;
+    text-decoration: none;
+  }
+  
+  a:hover {
+    text-decoration: underline;
+  }
+  
+  /* ====== HEADER ====== */
+  header {
+    text-align: center;
+    margin: 4rem auto 2rem;
+    max-width: 900px;
+    padding: 0 1rem;
+  }
+  
+  header h1 {
+    font-size: 2.8rem;
+    margin-bottom: 0.4rem;
+  }
+  
+  .tagline {
+    color: #aaa;
+    font-style: italic;
+    margin-bottom: 1rem;
+  }
+  
+  .intro {
+    text-align: center;
+    max-width: 700px;
+    margin: 1rem auto;
+    line-height: 1.6;
+    color: #ccc;
+  }
+  
+  .contact {
+    margin-top: 0.5rem;
+  }
+  
+  .contact a {
+    color: #58a6ff;
+    font-weight: 500;
+  }
+  
+  .contact a:hover {
+    text-decoration: underline;
+  }
+  
+  /* ====== SECTIONS ====== */
+  section {
+    max-width: 1100px;
+    margin: 3rem auto;
+    padding: 0 1rem;
+  }
+  
+  section h2 {
+    font-size: 1.8rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    padding-bottom: 0.25rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  /* ====== GRID LAYOUT ====== */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 8px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  
+  .image-card {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    border-radius: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: #111;
+    cursor: pointer;
+    text-decoration: none;
+    color: #fff;
+  }
+  
+  .image-card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.25s ease;
+  }
+  
+  .image-card:hover img,
+  .image-card:focus img {
+    transform: scale(1.05);
+  }
+  
+  /* ====== HOVER OVERLAY ====== */
+  .overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.65);
+    color: #fff;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+  }
+  
+  .image-card:hover .overlay,
+  .image-card:focus .overlay {
+    opacity: 1;
+  }
+  
+  .overlay h3 {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+  
+  .overlay .sub {
+    margin-top: 0.3rem;
+    font-size: 0.85rem;
+    opacity: 0.9;
+  }
+  
+  /* ====== MODAL ====== */
+  .modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background: rgba(0, 0, 0, 0.9);
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    overflow: auto;
+    padding: 1rem 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  .modal.open {
+    display: flex;
+    opacity: 1;
+  }
+  
+  .modal-content {
+    width: auto;
+    height: auto;
+    max-width: 85vw;
+    max-height: 75vh;
+    object-fit: contain;
+    background: #000;
+    margin: auto;
+    display: block;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+  
+  .modal.show .modal-content {
+    transform: scale(1.05);
+    opacity: 1;
+  }
+  
+  #caption {
+    color: #fff;
+    font-size: 1rem;
+    font-weight: bold;
+    margin: -0.8rem auto 0;
+    max-width: 90%;
+    line-height: 1.4;
+  }
+  
+  #caption a.caption-link {
+    display: inline-block;
+    margin-top: 0;
+    color: #58a6ff;
+    text-decoration: none;
+    font-weight: 600;
+  }
+  
+  #caption a.caption-link:hover {
+    text-decoration: underline;
+  }
+  
+  /* ====== CLOSE BUTTON ====== */
+  .close {
+    position: absolute;
+    top: 20px;
+    right: 35px;
+    color: #fff;
+    font-size: 36px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  .close:hover {
+    color: #bbb;
+  }
+  
+  /* ====== FOOTER ====== */
+  footer {
+    text-align: center;
+    padding: 2rem;
+    font-size: 0.9rem;
+    color: #aaa;
+    background-color: #111;
+    margin-top: 4rem;
+  }
+  
+  /* ====== RESPONSIVE ====== */
+  @media (max-width: 600px) {
+    header h1 {
+      font-size: 2.2rem;
+    }
+    .image-card img {
+      height: 160px;
+    }
+  }
+  
