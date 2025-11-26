@@ -1,57 +1,75 @@
-// ====== MODAL ELEMENTS ======
-const modal = document.getElementById("modal");
-const modalImg = document.getElementById("modal-img");
-const captionText = document.getElementById("caption");
-const closeBtn = document.querySelector(".close");
+document.addEventListener("DOMContentLoaded", () => {
+  const modal = document.getElementById("modal");
+  const modalImg = document.getElementById("modal-img");
+  const caption = document.getElementById("caption");
+  const closeBtn = document.querySelector(".close");
 
-let lastScrollY = 0;
+  const cards = document.querySelectorAll(".image-card");
 
-// ====== OPEN MODAL ======
-document.querySelectorAll('#graphics .grid .image-card')
-  .forEach(card => {
-    card.addEventListener('click', e => {
-      e.preventDefault();
-      lastScrollY = window.scrollY;
+  cards.forEach(card => {
+    card.addEventListener("click", () => {
+      const fullSrc = card.dataset.full || card.querySelector("img")?.src;
+      const text = card.dataset.caption || "";
+      const link = card.dataset.link || "";
 
-      const full = card.dataset.full;
-      const cap = card.dataset.caption || card.querySelector('.overlay h3')?.textContent;
-      const link = card.dataset.link;
+      const inInstagram = card.closest("#instagram") !== null;
+      const inGraphics = card.closest("#graphics") !== null;
 
-      modal.classList.add("open");
-      modalImg.src = full;
+      // Set modal image
+      modalImg.src = fullSrc;
 
-      // Force layout reflow before showing caption
-      void modal.offsetHeight;
-
-      if (link && cap) {
-        captionText.innerHTML = `
-          <a href="${link}" target="_blank" rel="noopener noreferrer" class="caption-link">
-            ${cap}
-          </a>
-        `;
-      } else {
-        captionText.textContent = cap || "";
+      // ==========================
+      // INSTAGRAM — only button
+      // ==========================
+      if (inInstagram) {
+        caption.innerHTML = link
+          ? `<a href="${link}" target="_blank" class="caption-link">View on Instagram </a>`
+          : "";
+        modal.classList.add("open");
+        return;
       }
 
-      requestAnimationFrame(() => modal.classList.add("show"));
-      document.body.style.overflow = "hidden";
+      // ==========================
+      // GRAPHIC PITCHES — caption IS the link (NO extra text)
+      // ==========================
+      if (inGraphics) {
+        caption.innerHTML = link
+          ? `<a href="${link}" target="_blank" class="caption-link">${text}</a>`
+          : text;
+        modal.classList.add("open");
+        return;
+      }
+
+      // ==========================
+      // DEFAULT — writing or others
+      // (show caption only; link optional)
+      // ==========================
+      if (link) {
+        caption.innerHTML = `
+          ${text}
+          <br>
+          <a href="${link}" target="_blank" class="caption-link">${link}</a>
+        `;
+      } else {
+        caption.textContent = text;
+      }
+
+      modal.classList.add("open");
     });
   });
 
-// ====== CLOSE MODAL ======
-function closeModal() {
-  modal.classList.remove("show");
-  setTimeout(() => {
+  // Close button
+  closeBtn.addEventListener("click", () => {
     modal.classList.remove("open");
-    modalImg.src = "";
-    captionText.innerHTML = "";
-    document.body.style.overflow = "";
-    window.scrollTo({ top: lastScrollY, behavior: "instant" });
-  }, 250);
-}
+  });
 
-// ====== EVENT LISTENERS ======
-closeBtn.addEventListener('click', closeModal);
-document.addEventListener('keydown', e => {
-  if (e.key === "Escape") closeModal();
+  // Click outside closes modal
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) modal.classList.remove("open");
+  });
+
+  // ESC closes modal
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") modal.classList.remove("open");
+  });
 });
